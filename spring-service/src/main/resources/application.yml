@@ -1,5 +1,15 @@
 spring:
-  mvc:
-    view:
-      prefix: /demo/
-      suffix: .html
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: file:src/main/resources/templates/
+  resources:
+    static-locations: file:src/main/resources/static/
+    cache:
+      period: 0
+server:
+  port: ${SERVER_PORT:8080}
+
+application:
+  id: ${APPLICATION_ID:#{null}}

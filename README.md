@@ -14,7 +14,7 @@ https://istio.io/latest/docs/setup/getting-started/#download
 # Start up service
 ```
 minikube start --memory=16384 --cpus=4
-kubectl apply -f istio-test-service.yaml -f istio-test-gtw.yaml
+kubectl apply -f k8s/istio-test-service.yaml -f k8s/istio-test-gtw.yaml
 ```
 
 ## Test it
@@ -22,6 +22,8 @@ kubectl apply -f istio-test-service.yaml -f istio-test-gtw.yaml
 export INGRESS_HOST=$(minikube ip)
 export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath=’{.spec.ports[?(@.name==”http2")].nodePort}’)
 export GATEWAY=$INGRESS_HOST:$INGRESS_PORT
+
+curl  $GATEWAY/actuator/health
 ```
 
 # Start up kaili dasboard
