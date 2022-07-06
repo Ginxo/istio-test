@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: istiotest-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: istiotest
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - istiotest-gateway
+  http:
+    - route:
+        - destination:
+            host: istiotestservice
+            port:
+              number: 80

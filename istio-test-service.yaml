@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: istiotestservice
+  labels:
+    app: istiotestservice
+spec:
+  selector:
+    app: istiotestservice
+  ports:
+    - port: 80
+      name: http
+      protocol: TCP
+      targetPort: 8080
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istiotestservice-v1
+  labels:
+    app: istiotestservice
+spec:
+  selector:
+    matchLabels:
+      app: istiotestservice
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: istiotestservice
+        version: v1
+    spec:
+      containers:
+        - name: istiotestservice
+          image: ginxo/istio-test-spring-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
