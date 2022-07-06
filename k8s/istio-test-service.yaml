@@ -21,10 +21,10 @@ metadata:
   labels:
     app: istiotestservice
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: istiotestservice
-  replicas: 1
   template:
     metadata:
       annotations:
@@ -36,7 +36,7 @@ spec:
       containers:
         - name: istiotestservice
           image: ginxo/istio-test-spring-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           livenessProbe:
