@@ -14,7 +14,7 @@ https://istio.io/latest/docs/setup/getting-started/#download
 # Start up service
 ```
 minikube start --memory=16384 --cpus=4
-kubectl apply -f k8s/istio-test-service.yaml -f k8s/istio-test-gtw.yaml
+kubectl apply -f k8s/
 ```
 
 ## Test it
